@@ -14,14 +14,8 @@ import random
 
 class GameOfLife(object):
 
-	__ALIVE = 1 #represent a alive cell
-	__DEAD = 0 #represent a dead cell
-	__FULL_LIFE = 100 #full life in percent
-	__PERCENT_TO_INIT_LIFE = 90 # is the percent of cells alive or dead =)
-
-	#works in console mode
-	__ALIVE_CHAR = "+"
-	__DEAD_CHAR = "-"
+	__ALIVE = True #represent a alive cell
+	__DEAD = False #represent a dead cell
 
 	"""Private functions"""
 
@@ -31,16 +25,6 @@ class GameOfLife(object):
 		self.width = 40
 		self.heigth = 40
 
-	# return if some node is alive or dead via Random
-	def __get_random_life(self):
-		result = None
-		if random.randint(self.__DEAD, self.__FULL_LIFE) > self.__PERCENT_TO_INIT_LIFE:
-			result = self.__ALIVE
-		else:
-			result = self.__DEAD
-		return result
-
-	
 	#return the new state of node(depends of the neighbors alive)
 	#1) Any live cell with fewer than two live neighbors dies,
 	#   as if caused under-population
@@ -107,24 +91,14 @@ class GameOfLife(object):
 
 	"""Public functions - expose the API"""
 	#Get a first board randomly
-	def get_board(self):
-		return [[self.__get_random_life() for col in range(self.width)] for row in range(self.heigth)]
+	def get_board(self , fill_random = False):
+		return [[False for col in range(self.width)] for row in range(self.heigth)]
 
 	#This method aply the algorithm for update the life in panel
 	def update_life(self , board):
-		updated_board = [[0 for col in range(self.width)] for row in range(self.heigth)]
+		updated_board = [[False for col in range(self.width)] for row in range(self.heigth)]
 		for i , row in enumerate(board):
 			for j , cell in enumerate(row):
 				number_of_neighbors = self.__get_alive_neighbors(i , j, board);
 				updated_board[i][j] = self.__change_state(cell , number_of_neighbors)
 		return updated_board
-
-	#For testing in console the board
-	def paint_board(self , board):
-		for row in board:
-			print("\n")
-			for cell in row:
-				comodin = self.__DEAD_CHAR;
-				if cell == self.__ALIVE:
-					comodin = self.__ALIVE_CHAR
-				print(comodin , end="")
