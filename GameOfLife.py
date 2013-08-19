@@ -92,11 +92,11 @@ class GameOfLife(object):
 	"""Public functions - expose the API"""
 	#Get a first board randomly
 	def get_board(self , fill_random = False):
-		return [[False for col in range(self.width)] for row in range(self.heigth)]
+		return [[self.__DEAD for col in range(self.width)] for row in range(self.heigth)]
 
 	#This method aply the algorithm for update the life in panel
 	def update_life(self , board):
-		updated_board = [[False for col in range(self.width)] for row in range(self.heigth)]
+		updated_board = [[self.__DEAD for col in range(self.width)] for row in range(self.heigth)]
 		for i , row in enumerate(board):
 			for j , cell in enumerate(row):
 				number_of_neighbors = self.__get_alive_neighbors(i , j, board);
