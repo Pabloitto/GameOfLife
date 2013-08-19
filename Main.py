@@ -39,10 +39,9 @@ class Form(QtGui.QWidget):
     __is_started = False
 
     #encapsule the board in the widget
-    def __init__(self , game_of_life , board):
+    def __init__(self , game_of_life):
         super(Form, self).__init__()
         self.game_of_life = game_of_life
-        self.board = board
         self.thread = MyQTThread(self)
         self.startButton = QtGui.QPushButton('Start', self)
         self.initUI()
@@ -72,7 +71,7 @@ class Form(QtGui.QWidget):
     def mousePressEvent(self, event):
         x = int(event.pos().x() / self.__SIZE_CELL)#Get relative position in the widget
         y = int(event.pos().y() / self.__SIZE_CELL)
-        self.board[x][y] = not self.board[x][y] #set the oposite value in cell
+        self.game_of_life.board[x][y] = not self.game_of_life.board[x][y] #set the oposite value in cell
         self.update()
 
     #Override the paint event for draw in the widget
@@ -84,24 +83,19 @@ class Form(QtGui.QWidget):
 
     #this function draw the life ;)
     def drawPoints(self,qp):
-        color = None
         qp.setPen(QtCore.Qt.black)
         brush = QtGui.QBrush(QtCore.Qt.SolidPattern)
         qp.setBrush(brush)
-        for i , row in enumerate(self.board):
+        for i , row in enumerate(self.game_of_life.board):
             for j , cell in enumerate(row):
-                node = self.board[i][j]
-                if not node: #the node is dead
-                    color = QtGui.QColor(255, 255, 255) #paint background
-                else:
-                    color = QtGui.QColor(0, 139, 0) # Hey is alive!!!, so, paint green like a tree =)
+                color = (QtGui.QColor(255, 255, 255), QtGui.QColor(0, 139, 0))[self.game_of_life.board[i][j]]
                 qp.fillRect((i * self.__SIZE_CELL) + 2, (j * self.__SIZE_CELL) + 2, self.__SIZE_CELL - 3 , self.__SIZE_CELL  - 3, color)
         if self.__is_started:
             self.update_board()
 
     #This function update the life in the board
     def update_board(self):
-        self.board = self.game_of_life.update_life(self.board)
+        self.game_of_life.update_life()
     
     #Refresh the widget
     def refresh(self):
@@ -110,9 +104,8 @@ class Form(QtGui.QWidget):
 #Function main
 def main():
     game_of_life = GameOfLife()
-    board = game_of_life.get_board()
     app = QtGui.QApplication(sys.argv)
-    win = Form(game_of_life , board)
+    win = Form(game_of_life)
     sys.exit(app.exec_())
 
 #Execute main
