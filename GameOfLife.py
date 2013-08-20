@@ -43,42 +43,18 @@ class GameOfLife():
 	def __get_alive_neighbors(self , x , y):
 		alive_neighbors = 0
 
-		current_position = self.board[x][y] # get current cell
+		tupe_neighbors = (-1 , 0 , 1)
 
 		size = len(self.board) - 1
 
-		#left - right and top - down
-		if (x - 1) > 0:
-			if self.board[x - 1][y]:
-				alive_neighbors = alive_neighbors + 1
-
-		if (x + 1) <= size:
-			if self.board[x + 1][y]:
-				alive_neighbors = alive_neighbors + 1
-
-		if (y + 1) <= size:
-			if self.board[x][y + 1]:
-				alive_neighbors = alive_neighbors + 1
-
-		if (y - 1) > 0:
-			if self.board[x][y - 1]:
-				alive_neighbors = alive_neighbors + 1
-		#corners
-		if (x - 1) > 0 and (y - 1) > 0:
-			if self.board[x - 1][y - 1]:
-				alive_neighbors = alive_neighbors + 1
-
-		if (x + 1) <= size and (y - 1) > 0:
-			if self.board[x + 1][y - 1]:
-				alive_neighbors = alive_neighbors + 1
-
-		if(y + 1) <= size and (x - 1) > 0:
-			if self.board[x - 1][y + 1]:
-				alive_neighbors = alive_neighbors + 1
-
-		if(y + 1) <= size and (x + 1) <= size:
-			if self.board[x + 1][y + 1]:
-				alive_neighbors = alive_neighbors + 1
+		for index_x in tupe_neighbors:
+			for index_y in tupe_neighbors:
+				if (x + index_x) > 0 and (x + index_x) <= size:
+					if (y + index_y) > 0 and (y + index_y) <= size:
+						if index_x == 0 and index_y == 0:
+							continue
+						if self.board[x + index_x][y + index_y]:
+							alive_neighbors+=1
 
 		return alive_neighbors
 
