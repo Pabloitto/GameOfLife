@@ -1,5 +1,4 @@
 import random
-
 """
     Copyright 2013 Juan Pablo Itto Dominguez , juanitto_40@hotmail.com
 
@@ -11,12 +10,18 @@ import random
 
     alive or dead =)
 """
-
 class GameOfLife():
 
-	def __init__(self):
-		self.width = 40
-		self.heigth = 40
+	_scala = 20
+
+	def __init__(self , size):
+		self._scala = int(size / self._scala)
+		self.width = self._scala
+		self.heigth = self._scala
+		self.width_screen = size
+		self.heigth_screen = size
+		self.size_x = size / self.width
+		self.size_y = size / self.heigth
 		self.board = self.__get_board()
 
 	#return the new state of node(depends of the neighbors alive)
