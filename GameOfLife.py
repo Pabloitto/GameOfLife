@@ -16,12 +16,9 @@ class GameOfLife():
 
 	def __init__(self , size):
 		self._scala = int(size / self._scala)
-		self.width = self._scala
-		self.heigth = self._scala
-		self.width_screen = size
-		self.heigth_screen = size
-		self.size_x = size / self.width
-		self.size_y = size / self.heigth
+		self.width = self.heigth = self._scala
+		self.width_screen = self.heigth_screen = size
+		self.size_x = self.size_y = size / self.width
 		self.board = self.__get_board()
 
 	#return the new state of node(depends of the neighbors alive)
@@ -42,13 +39,9 @@ class GameOfLife():
 	#adjacent. At each step in time(generation).
 	def __get_alive_neighbors(self , x , y):
 		alive_neighbors = 0
-
-		tupe_neighbors = (-1 , 0 , 1)
-
 		size = len(self.board) - 1
-
-		for index_x in tupe_neighbors:
-			for index_y in tupe_neighbors:
+		for index_x in (-1 , 0 , 1):
+			for index_y in (-1 , 0 , 1):
 				if (x + index_x) > 0 and (x + index_x) <= size:
 					if (y + index_y) > 0 and (y + index_y) <= size:
 						if index_x == 0 and index_y == 0:
