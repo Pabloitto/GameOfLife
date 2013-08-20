@@ -34,8 +34,6 @@ class MyQTThread(QtCore.QThread):
 #class Form is a QWidget, update with a qthread
 class Form(QtGui.QWidget):
 
-    __SIZE_CELL = 10
-    
     __is_started = False
 
     #encapsule the board in the widget
@@ -60,7 +58,7 @@ class Form(QtGui.QWidget):
     #Is call for initialize the widget
     def initUI(self):
         self.setWindowTitle('Game of life')
-        self.setFixedSize(400, 400)
+        self.setFixedSize(self.game_of_life.width_screen, self.game_of_life.heigth_screen)
         mainLayout = QtGui.QHBoxLayout()
         QtCore.QObject.connect(self.startButton, QtCore.SIGNAL("clicked()"), self.onClickButton)
         mainLayout.addWidget(self.startButton)
@@ -69,8 +67,8 @@ class Form(QtGui.QWidget):
         self.show()
 
     def mousePressEvent(self, event):
-        x = int(event.pos().x() / self.__SIZE_CELL)#Get relative position in the widget
-        y = int(event.pos().y() / self.__SIZE_CELL)
+        x = int(event.pos().x() / self.game_of_life.size_x)#Get relative position in the widget
+        y = int(event.pos().y() / self.game_of_life.size_y)
         self.game_of_life.board[x][y] = not self.game_of_life.board[x][y] #set the oposite value in cell
         self.update()
 
@@ -89,7 +87,7 @@ class Form(QtGui.QWidget):
         for i , row in enumerate(self.game_of_life.board):
             for j , cell in enumerate(row):
                 color = (QtGui.QColor(255, 255, 255), QtGui.QColor(0, 139, 0))[self.game_of_life.board[i][j]]
-                qp.fillRect((i * self.__SIZE_CELL) + 2, (j * self.__SIZE_CELL) + 2, self.__SIZE_CELL - 3 , self.__SIZE_CELL  - 3, color)
+                qp.fillRect((i * self.game_of_life.size_x) + 2, (j * self.game_of_life.size_y) + 2, self.game_of_life.size_x - 3 , self.game_of_life.size_y  - 3, color)
         if self.__is_started:
             self.update_board()
 
@@ -103,7 +101,9 @@ class Form(QtGui.QWidget):
 
 #Function main
 def main():
-    game_of_life = GameOfLife()
+    """Configure board"""
+    size = 400
+    game_of_life = GameOfLife(size)
     app = QtGui.QApplication(sys.argv)
     win = Form(game_of_life)
     sys.exit(app.exec_())
