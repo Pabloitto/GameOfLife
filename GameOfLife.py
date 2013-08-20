@@ -1,4 +1,3 @@
-import random
 """
     Copyright 2013 Juan Pablo Itto Dominguez , juanitto_40@hotmail.com
 
@@ -32,7 +31,6 @@ class GameOfLife():
 	#   as if by reproduction
 	def __change_state(self , current_state , live_cells):
 		return live_cells == 3 or (live_cells == 2 and current_state)
-			
 
 	#Every cell interacts with its eight neighbors, which are 
 	#the cells that are horizontally, vertically, or diagonally 
@@ -44,14 +42,14 @@ class GameOfLife():
 			for index_y in (-1 , 0 , 1):
 				if (x + index_x) > 0 and (x + index_x) <= size:
 					if (y + index_y) > 0 and (y + index_y) <= size:
-						if index_x == 0 and index_y == 0:
-							continue
+						if index_x == 0 and index_y == 0: 
+							continue # continue if is the current cell
 						if self.board[x + index_x][y + index_y]:
 							alive_neighbors+=1
 
 		return alive_neighbors
-
-    #get a empty board
+		
+	#get a empty board
 	def __get_board(self):
 		return [[False for col in range(self.width)] for row in range(self.heigth)]
 
