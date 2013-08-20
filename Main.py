@@ -102,7 +102,7 @@ class Form(QtGui.QWidget):
 #Function main
 def main():
     """Configure board"""
-    size = 400
+    size = 800
     game_of_life = GameOfLife(size)
     app = QtGui.QApplication(sys.argv)
     win = Form(game_of_life)
