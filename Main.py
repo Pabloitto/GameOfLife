@@ -16,7 +16,7 @@ import sys
 # Class Represent a threat for update QWidget
 class MyQTThread(QtCore.QThread):
 
-    __TIME_OUT = 0.10  # represent a time out for refreshing
+    __TIME_OUT = 0.25  # represent a time out for refreshing
 
     # Pass the form for refreshing
     def __init__(self, form):

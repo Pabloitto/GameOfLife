@@ -2,6 +2,8 @@ GameOfLife
 
 This is my implementation about the Game Of Life developed on python using Qt (PyQt)
 
+![](/img/game.gif?raw=true)
+
 Enjoy It!!!
 
 ==========

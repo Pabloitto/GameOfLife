@@ -11,7 +11,7 @@
 """
 class GameOfLife():
 
-    _scala = 10
+    _scala = 20
 
     def __init__(self, size):
         self._scala = int(size / self._scala)
